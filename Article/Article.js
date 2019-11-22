@@ -112,3 +112,54 @@ const data = [
   Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
 
 */
+
+let articlesDiv = document.querySelector(".articles");
+
+/*============== ARTICLE COMPONENT CREATOR ==============*/
+function articleCreator(object) {
+  // Variables
+  let article = document.createElement("div");
+
+  const divContents = [document.createElement("h2")];
+
+  for (let i = 0; i < 4; i++) {
+    let p = document.createElement("p");
+    divContents.push(p);
+  }
+
+  divContents.push(document.createElement("span"));
+
+  // Attributes and Content
+  article.classList.add("article");
+  divContents[0].textContent = object.title;
+  divContents[1].setAttribute("class", "date");
+  divContents[1].textContent = object.date;
+  divContents[2].textContent = object.firstParagraph;
+  divContents[3].textContent = object.secondParagraph;
+  divContents[4].textContent = object.thirdParagraph;
+  divContents[5].setAttribute("class", "expandButton");
+  divContents[5].textContent = "\u25bc";
+
+  // Event Listeners
+  divContents[5].addEventListener("click", (event) => {
+    article.classList.toggle("article-open");
+
+    if (article.classList.contains("article-open")) {
+      divContents[5].textContent = "\u25b2";
+    } else {
+      divContents[5].textContent = "\u25bc";
+    }
+  });
+
+  // Component Structure
+  divContents.forEach((arg) => {
+    article.appendChild(arg);
+  });
+
+  return article;
+}
+
+/*============== DOM MANIPULATION ==============*/
+data.forEach((arg) => {
+  articlesDiv.appendChild(articleCreator(arg));
+});
